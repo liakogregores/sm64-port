@@ -1,0 +1,22 @@
+name: Build SM64 PSP Port
+
+on:
+  workflow_dispatch:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Build PSP EBOOT using Docker
+        run: |
+          docker run --rm -v ${{ github.workspace }}:/sm64 markstreet/sm64:psp make TARGET_PSP=1 pbp --jobs
+
+      - name: Upload Compiled EBOOT Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: sm64-psp-build
+          path: build/us_psp/mario64/
