@@ -9,14 +9,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Build PSP EBOOT using Docker
         run: |
           docker run --rm -v ${{ github.workspace }}:/sm64 markstreet/sm64:psp make TARGET_PSP=1 pbp --jobs
 
       - name: Upload Compiled EBOOT Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: sm64-psp-build
           path: build/us_psp/mario64/
